@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 
 static int fix(char * const pancakes);
 
@@ -8,19 +7,13 @@ main(void)
 {
     int i, T;
     char pancakes[100 + 1];
-    char *p;
 
     scanf("%u", &T);
     (void)getchar();    /* consume newline */
 
-    for (i = 0u; i < T; i++) {
-        (void)fgets(pancakes, sizeof pancakes, stdin);
-        p = strchr(pancakes, '\n');
-        if (p)
-            *p = '\0';
-
-        printf("Case #%u: %u\n", i + 1, fix(pancakes));
-    }
+    for (i = 0; i < T; i++)
+        printf("Case #%u: %u\n", i + 1,
+                fix(fgets(pancakes, sizeof pancakes, stdin)));
 
     return 0;
 }
@@ -34,7 +27,7 @@ fix(char * const pancakes)
         while ('+' == *p)
             p++;
 
-        if ('\0' == *p)
+        if ('\0' == *p || '\n' == *p)
             return 0;
         else {
             for (p = pancakes; '+' == *p ; p++)
@@ -47,7 +40,7 @@ fix(char * const pancakes)
         while ('-' == *p)
             p++;
 
-        if ('\0' == *p)
+        if ('\0' == *p || '\n' == *p)
             return 1;
         else {
             for (p = pancakes; '-' == *p ; p++)
